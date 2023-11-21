@@ -9,5 +9,18 @@ package com.mycompany.grupo4;
  * @author German
  */
 class Tecnico {
-String nombreApellido;    
+private String nombreApellido;  
+
+    public Tecnico(String nombreApellido) {
+        this.nombreApellido = nombreApellido;
+    }
+
+    public String getNombreApellido() {
+        return nombreApellido;
+    }
+
+    public void setNombreApellido(String nombreApellido) {
+        this.nombreApellido = nombreApellido;
+    }
+
 }

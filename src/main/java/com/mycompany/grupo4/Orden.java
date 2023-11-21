@@ -35,4 +35,34 @@ class Orden {
     public Cliente getCliente()     {   return cliente;}
     public Categoria getCategoria() {   return categoria;}
     public Tecnico getTecnico()     {   return tecnico;}
+
+    public void setDescripcion_orden(String descripcion_orden) {
+        this.descripcion_orden = descripcion_orden;
+    }
+
+    public void setCosto(Integer costo) {
+        this.costo = costo;
+    }
+
+    public void setFechaOrden(Date fechaOrden) {
+        this.fechaOrden = fechaOrden;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setTecnico(Tecnico tecnico) {
+        this.tecnico = tecnico;
+    }
+    
+    
 }

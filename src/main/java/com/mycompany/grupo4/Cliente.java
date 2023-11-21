@@ -23,6 +23,46 @@ public class Cliente {
         this.direccion = direccion;
         this.mail = email;
     }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public ArrayList<Orden> getListaDeOrdenes() {
+        return listaDeOrdenes;
+    }
+
+    public void setListaDeOrdenes(ArrayList<Orden> listaDeOrdenes) {
+        this.listaDeOrdenes = listaDeOrdenes;
+    }
     
     public void ingresarOrden(String descripcion, Integer costo, Categoria categoria, Tecnico tecnico){
         Orden nuevaOrden = new Orden(descripcion, costo, this, categoria, tecnico);
