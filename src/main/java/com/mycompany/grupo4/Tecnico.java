@@ -4,12 +4,15 @@
  */
 package com.mycompany.grupo4;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author German
  */
 class Tecnico {
-private String nombreApellido;  
+private String nombreApellido;
+   private ArrayList<Orden> listaDeOrdenes = new ArrayList<>();
 
     public Tecnico(String nombreApellido) {
         this.nombreApellido = nombreApellido;

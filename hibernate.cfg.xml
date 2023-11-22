@@ -8,10 +8,10 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/facturacion</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/servicio_tecnico</property>
         <property name="connection.username">root</property>
         <!--Cambiar la contraseña-->
-        <property name="connection.password">lamanzana</property>
+        <property name="connection.password">germansql.23</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>

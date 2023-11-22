@@ -1,4 +1,4 @@
-package com.mycompany.hibernatepolo;
+package com.mycompany.grupo4;
 
 import java.io.File;
 

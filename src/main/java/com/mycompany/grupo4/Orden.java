@@ -4,12 +4,11 @@
  */
 package com.mycompany.grupo4;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -24,11 +23,26 @@ class Orden {
             private int cod_factura;
     @Column(name = "descripcion_orden", nullable = false)
     String descripcion_orden;
+    
+    @Column(name = "costo", nullable = false)
     Integer costo;
+    
+    @Column(name = "fecha_orden", nullable = false)
     Date fechaOrden;
+    
+    
     Estado estado;
+    
+    @ManyToOne
+            @Column(name = "cliente_orden")
     Cliente cliente;
+    
+    @ManyToOne
+            @Column(name = "tecnico_orden")
     Tecnico tecnico;
+    
+    @ManyToOne
+            @Column(name = "categoria_orden")
     Categoria categoria;
 
     
