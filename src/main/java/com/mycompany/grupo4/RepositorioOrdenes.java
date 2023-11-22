@@ -28,11 +28,18 @@ public class RepositorioOrdenes {
     public ArrayList<Orden> ordenesEntreLasFechas(Date primeraFecha, Date segundaFecha){
         return (ArrayList<Orden>) repoOrdenes.quitarOrdenesAnteriores(primeraFecha);
     }
-  */  
+  */
+        public void ingresarOrden(String descripcion, Integer costo, Categoria categoria,Cliente cliente, Tecnico tecnico){
+        Orden nuevaOrden = new Orden(descripcion, costo, cliente, categoria, tecnico);
+        repoOrdenes.add(nuevaOrden);
+    }
+    
+    
     public ArrayList<Orden> ordenesEntre(Date primeraFecha, Date segundaFecha){
         return (ArrayList<Orden>) repoOrdenes.stream().filter(orden->orden.getFechaOrden().after(primeraFecha)).
         filter(orden->orden.getFechaOrden().before(segundaFecha)).collect(Collectors.toList());
     }
+    
     
     
 }

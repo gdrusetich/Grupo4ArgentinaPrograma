@@ -63,9 +63,4 @@ public class Cliente {
     public void setListaDeOrdenes(ArrayList<Orden> listaDeOrdenes) {
         this.listaDeOrdenes = listaDeOrdenes;
     }
-    
-    public void ingresarOrden(String descripcion, Integer costo, Categoria categoria, Tecnico tecnico){
-        Orden nuevaOrden = new Orden(descripcion, costo, this, categoria, tecnico);
-        listaDeOrdenes.add(nuevaOrden);
-    }
 }

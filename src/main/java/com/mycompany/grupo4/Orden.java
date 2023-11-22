@@ -7,25 +7,36 @@ package com.mycompany.grupo4;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author German
  */
+@Entity
+        @Table(name = "orden")
 class Orden {
+    @Id
+            @Column(name = "id_orden", unique = true)
+            private int cod_factura;
+    @Column(name = "descripcion_orden", nullable = false)
     String descripcion_orden;
     Integer costo;
     Date fechaOrden;
-    Boolean estado;
+    Estado estado;
     Cliente cliente;
-    Categoria categoria;
     Tecnico tecnico;
+    Categoria categoria;
+
     
     public Orden(String descripcion, Integer costo, Cliente cliente, Categoria categoria, Tecnico tecnico){
         this.descripcion_orden = descripcion;
         this.costo = costo;
         this.fechaOrden = new Date();
-        this.estado = false;
+        this.estado = Estado.NoResuelto;
         this.cliente = cliente;
         this.categoria = categoria;
         this.tecnico = tecnico;        
@@ -48,7 +59,7 @@ class Orden {
         this.fechaOrden = fechaOrden;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(Estado unEstado) {
         this.estado = estado;
     }
 
