@@ -31,5 +31,9 @@ public class Grupo4 {
         Orden theOrden = new Orden("Pantalla de celular rota", 15000, clienteGerman, celular, alfredoCelular);
         session.save(theOrden);
         session.getTransaction().commit();
+        
+        RepositorioClientes repositorioClientes = new RepositorioClientes();
+        RepositorioOrdenes repositorioOrdenes = new RepositorioOrdenes();
+        
     }
 }

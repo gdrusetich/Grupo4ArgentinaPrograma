@@ -63,4 +63,10 @@ public class Cliente {
     public void setListaDeOrdenes(ArrayList<Orden> listaDeOrdenes) {
         this.listaDeOrdenes = listaDeOrdenes;
     }
+    
+    public void agregarOrden(Orden orden){
+        this.listaDeOrdenes.add(orden);
+    }
+    
+    
 }

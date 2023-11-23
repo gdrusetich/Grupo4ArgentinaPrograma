@@ -53,7 +53,8 @@ class Orden {
         this.estado = Estado.NoResuelto;
         this.cliente = cliente;
         this.categoria = categoria;
-        this.tecnico = tecnico;        
+        this.tecnico = tecnico;  
+        RepositorioOrdenes.getInstance().agregarUnaOrden(this);
     }
 //Getters
     public Date getFechaOrden()     {   return fechaOrden;}
@@ -89,5 +90,18 @@ class Orden {
         this.tecnico = tecnico;
     }
     
-    
+    public void ingresarOrden(String descripcion, Integer costo, String dni, Categoria categoria, Tecnico tecnico){
+//Si el cliente existe.
+        if(RepositorioClientes.getInstance().validarCliente(dni)){
+            //Lo elije del repositorioClientes
+            Cliente clienteValidado = RepositorioClientes.getInstance().devolverClienteConDNI(dni);
+            //Crea una nueva orden para ese cliente.
+            Orden nuevaOrden = new Orden(descripcion, costo, clienteValidado, categoria, tecnico);
+            //Agrega la orden al repositorio de ordenes
+            RepositorioOrdenes.getInstance().agregarUnaOrden(nuevaOrden);
+        } else {
+            Cliente nuevoCliente = new Cliente(dni, "nn", "--", "@gmail.com");
+            RepositorioClientes.getInstance().agregarUnCliente(nuevoCliente);
+        }
+    }
 }

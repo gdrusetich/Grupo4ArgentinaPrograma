@@ -15,6 +15,14 @@ import java.util.stream.Collectors;
 public class RepositorioOrdenes {
     private ArrayList<Orden> repoOrdenes = new ArrayList<Orden>();
     
+    private static final RepositorioOrdenes instance = new RepositorioOrdenes();
+    
+    public static RepositorioOrdenes getInstance(){
+        return instance;
+    }
+    
+    
+    
 /*  
 
     public ArrayList<Orden> quitarOrdenesAnteriores(Date unaFecha){   
@@ -29,9 +37,10 @@ public class RepositorioOrdenes {
         return (ArrayList<Orden>) repoOrdenes.quitarOrdenesAnteriores(primeraFecha);
     }
   */
-        public void ingresarOrden(String descripcion, Integer costo, Categoria categoria,Cliente cliente, Tecnico tecnico){
-        Orden nuevaOrden = new Orden(descripcion, costo, cliente, categoria, tecnico);
-        repoOrdenes.add(nuevaOrden);
+    //La agrega al Repositorio
+        public void agregarUnaOrden(Orden unaOrden){
+            
+        this.repoOrdenes.add(unaOrden);
     }
     
     

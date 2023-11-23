@@ -10,5 +10,5 @@ package com.mycompany.grupo4;
  */
 public enum Estado {
     Resuelto,
-    NoResuelto;
+    NoResuelto
 }
