@@ -4,11 +4,26 @@
  */
 package com.mycompany.grupo4;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author German
  */
+@Entity
+        @Table(name = "categoria")
 class Categoria {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id_categoria", unique = true)
+    private int id_categoria;
+    
+    @Column(name = "descripcion_categoria")
     private String descripcion;
 
     public Categoria(String descripcion) {

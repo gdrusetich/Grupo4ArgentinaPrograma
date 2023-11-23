@@ -28,12 +28,8 @@ public class Grupo4 {
         Cliente clienteGerman = new Cliente("35255255", "Germán", "VillaLugano", "german@gmail.com");
         Categoria celular = new Categoria("Tecnico de celulares");
         Tecnico alfredoCelular = new Tecnico("Alfredo Montes");
-        Orden theOrden = new Orden("Pantalla de celular rota", 15000, clienteGerman, celular, alfredoCelular);
+        Orden theOrden = new Orden(title, 15000, clienteGerman, celular, alfredoCelular);
         session.save(theOrden);
-        session.getTransaction().commit();
-        
-        RepositorioClientes repositorioClientes = new RepositorioClientes();
-        RepositorioOrdenes repositorioOrdenes = new RepositorioOrdenes();
-        
+        session.getTransaction().commit();        
     }
 }

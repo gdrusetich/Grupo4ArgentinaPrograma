@@ -5,13 +5,31 @@
 package com.mycompany.grupo4;
 
 import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
  * @author German
  */
+@Entity
+        @Table(name = "tecnico")
 class Tecnico {
+    
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id_tecnico", unique=true)
+       private int id_tecnico;
+    
+    @Column(name = "nombreApellido", nullable = false)
 private String nombreApellido;
+   
+    @Transient
    private ArrayList<Orden> listaDeOrdenes = new ArrayList<>();
 
     public Tecnico(String nombreApellido) {

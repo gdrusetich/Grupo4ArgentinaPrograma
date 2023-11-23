@@ -31,10 +31,11 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto"></property>
 
-        <mapping class="com.mycompany.grupo4.Categoria" />
+
         <mapping class="com.mycompany.grupo4.Cliente" />
         <mapping class="com.mycompany.grupo4.Orden" />
         <mapping class="com.mycompany.grupo4.Tecnico" />
+        <mapping class="com.mycompany.grupo4.Categoria" />
         
     </session-factory>
 

@@ -5,11 +5,16 @@
 package com.mycompany.grupo4;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -19,8 +24,9 @@ import javax.persistence.Table;
         @Table(name = "orden")
 class Orden {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
             @Column(name = "id_orden", unique = true)
-            private int cod_factura;
+            private int id_orden;
     @Column(name = "descripcion_orden", nullable = false)
     String descripcion_orden;
     
@@ -33,16 +39,18 @@ class Orden {
     
     Estado estado;
     
-    @ManyToOne
-            @Column(name = "cliente_orden")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "cliente_orden")
     Cliente cliente;
     
-    @ManyToOne
-            @Column(name = "tecnico_orden")
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "tecnico_orden")
     Tecnico tecnico;
     
-    @ManyToOne
-            @Column(name = "categoria_orden")
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "categoria_orden")
     Categoria categoria;
 
     

@@ -5,16 +5,39 @@
 package com.mycompany.grupo4;
 
 import java.util.ArrayList;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
  * @author German
  */
+@Entity
+@Table (name = "cliente")
 public class Cliente {
+        @Id
+        @GeneratedValue(strategy=GenerationType.IDENTITY)
+        @Column(name = "id_orden", unique = true)
+    private int id_orden;
+        
+        @Column(name = "dni", nullable = false)
     private String dni;
+        
+        @Column(name = "nombre", nullable = false)
     private String nombre;
+        
+        @Column(name = "direccion", nullable = false)
     private String direccion;
+        
+        @Column(name = "mail", nullable = false)
     private String mail;
+        
+        @Transient
     private ArrayList<Orden> listaDeOrdenes = new ArrayList<>();
     
     public Cliente(String dni, String nombre, String direccion, String email){
