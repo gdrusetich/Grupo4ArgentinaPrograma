@@ -21,10 +21,6 @@ import javax.persistence.Transient;
 @Table (name = "cliente")
 public class Cliente {
         @Id
-        @GeneratedValue(strategy=GenerationType.IDENTITY)
-        @Column(name = "id_orden", unique = true)
-    private int id_orden;
-        
         @Column(name = "dni", nullable = false)
     private String dni;
         

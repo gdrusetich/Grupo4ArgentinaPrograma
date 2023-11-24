@@ -25,10 +25,11 @@ import javax.persistence.Transient;
 class Orden {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-            @Column(name = "id_orden", unique = true)
-            private int id_orden;
+    @Column(name = "id_orden", unique = true)
+    private int id_orden;
+    
     @Column(name = "descripcion_orden", nullable = false)
-    String descripcion_orden;
+    String descripcion;
     
     @Column(name = "costo", nullable = false)
     Integer costo;
@@ -55,14 +56,14 @@ class Orden {
 
     
     public Orden(String descripcion, Integer costo, Cliente cliente, Categoria categoria, Tecnico tecnico){
-        this.descripcion_orden = descripcion;
+        this.descripcion = descripcion;
         this.costo = costo;
         this.fechaOrden = new Date();
         this.estado = Estado.NoResuelto;
         this.cliente = cliente;
         this.categoria = categoria;
         this.tecnico = tecnico;  
-        RepositorioOrdenes.getInstance().agregarUnaOrden(this);
+        
     }
 //Getters
     public Date getFechaOrden()     {   return fechaOrden;}
@@ -71,7 +72,7 @@ class Orden {
     public Tecnico getTecnico()     {   return tecnico;}
 
     public void setDescripcion_orden(String descripcion_orden) {
-        this.descripcion_orden = descripcion_orden;
+        this.descripcion = descripcion_orden;
     }
 
     public void setCosto(Integer costo) {
