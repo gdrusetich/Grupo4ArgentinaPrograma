@@ -4,6 +4,7 @@
  */
 package com.mycompany.grupo4;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,15 +20,15 @@ import javax.persistence.Transient;
  */
 @Entity
         @Table(name = "tecnico")
-class Tecnico {
+class Tecnico implements Serializable{
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_tecnico", unique=true)
-       private int id_tecnico;
+    private int id_tecnico;
     
     @Column(name = "nombreApellido", nullable = false)
-private String nombreApellido;
+    private String nombreApellido;
    
     @Transient
    private ArrayList<Orden> listaDeOrdenes = new ArrayList<>();
@@ -35,6 +36,7 @@ private String nombreApellido;
     public Tecnico(String nombreApellido) {
         this.nombreApellido = nombreApellido;
     }
+        public Tecnico() {}
 
     public String getNombreApellido() {
         return nombreApellido;

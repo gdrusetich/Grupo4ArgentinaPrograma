@@ -4,11 +4,10 @@
  */
 package com.mycompany.grupo4;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,7 +18,7 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table (name = "cliente")
-public class Cliente {
+public class Cliente implements Serializable{
         @Id
         @Column(name = "dni", nullable = false)
     private String dni;
@@ -34,13 +33,18 @@ public class Cliente {
     private String mail;
         
         @Transient
-    private ArrayList<Orden> listaDeOrdenes = new ArrayList<>();
+    private ArrayList<Orden> listaDeOrdenes;
     
+    public Cliente(){
+        
+    }
+        
     public Cliente(String dni, String nombre, String direccion, String email){
-        this.dni = dni;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.mail = email;
+    this.dni = dni;
+    this.nombre = nombre;
+    this.direccion = direccion;
+    this.mail = email;
+    this.listaDeOrdenes = new ArrayList<Orden>();
     }
 
     public String getDni() {

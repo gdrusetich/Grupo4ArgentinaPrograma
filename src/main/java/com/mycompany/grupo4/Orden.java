@@ -4,7 +4,7 @@
  */
 package com.mycompany.grupo4;
 
-import java.util.Date;
+import java.time.LocalDate;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +24,7 @@ import javax.persistence.Transient;
         @Table(name = "orden")
 class Orden {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_orden", unique = true)
     private int id_orden;
     
@@ -35,22 +35,22 @@ class Orden {
     Integer costo;
     
     @Column(name = "fecha_orden", nullable = false)
-    Date fechaOrden;
+    LocalDate fechaOrden;
     
     
     Estado estado;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade  =CascadeType.ALL)
     @JoinColumn(name = "cliente_orden")
     Cliente cliente;
     
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "tecnico_orden")
     Tecnico tecnico;
     
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_orden")
     Categoria categoria;
 
@@ -58,15 +58,18 @@ class Orden {
     public Orden(String descripcion, Integer costo, Cliente cliente, Categoria categoria, Tecnico tecnico){
         this.descripcion = descripcion;
         this.costo = costo;
-        this.fechaOrden = new Date();
+        this.fechaOrden = LocalDate.now();
         this.estado = Estado.NoResuelto;
         this.cliente = cliente;
         this.categoria = categoria;
         this.tecnico = tecnico;  
         
     }
+    public Orden(){}
+    
 //Getters
-    public Date getFechaOrden()     {   return fechaOrden;}
+    public String getDescripcion()  {return descripcion;}
+    public LocalDate getFechaOrden()     {   return fechaOrden;}
     public Cliente getCliente()     {   return cliente;}
     public Categoria getCategoria() {   return categoria;}
     public Tecnico getTecnico()     {   return tecnico;}
@@ -79,7 +82,7 @@ class Orden {
         this.costo = costo;
     }
 
-    public void setFechaOrden(Date fechaOrden) {
+    public void setFechaOrden(LocalDate fechaOrden) {
         this.fechaOrden = fechaOrden;
     }
 
@@ -101,16 +104,8 @@ class Orden {
     
     public void ingresarOrden(String descripcion, Integer costo, String dni, Categoria categoria, Tecnico tecnico){
 //Si el cliente existe.
-        if(RepositorioClientes.getInstance().validarCliente(dni)){
-            //Lo elije del repositorioClientes
-            Cliente clienteValidado = RepositorioClientes.getInstance().devolverClienteConDNI(dni);
-            //Crea una nueva orden para ese cliente.
-            Orden nuevaOrden = new Orden(descripcion, costo, clienteValidado, categoria, tecnico);
-            //Agrega la orden al repositorio de ordenes
-            RepositorioOrdenes.getInstance().agregarUnaOrden(nuevaOrden);
-        } else {
-            Cliente nuevoCliente = new Cliente(dni, "nn", "--", "@gmail.com");
-            RepositorioClientes.getInstance().agregarUnCliente(nuevoCliente);
-        }
+        
+            
     }
 }
+

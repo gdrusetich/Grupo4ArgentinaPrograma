@@ -4,6 +4,7 @@
  */
 package com.mycompany.grupo4;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,10 @@ import javax.persistence.Table;
  * @author German
  */
 @Entity
-        @Table(name = "categoria")
-class Categoria {
+@Table(name = "categoria")
+class Categoria implements Serializable{
+
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id_categoria", unique = true)
@@ -29,6 +32,8 @@ class Categoria {
     public Categoria(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+    public Categoria() {}
 
     public String getDescripcion() {
         return descripcion;
@@ -36,6 +41,10 @@ class Categoria {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+        public int getId() {
+        return id_categoria;
     }
     
 }
