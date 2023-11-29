@@ -5,7 +5,6 @@
 package com.mycompany.grupo4;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -24,11 +23,101 @@ public class Grupo4 {
               
         Grupo4 es = new Grupo4();
         //es.ingresarOrden();
-        LocalDate fecha1= LocalDate.now().minusDays(30);
-        LocalDate fecha2 = LocalDate.now().plusDays(30);
-        es.listarOrdenesEntre(fecha1,fecha2);
+        es.listarOrdenesEntre();
         HibernateUtil.getSessionFactory().close();
     }
+
+    
+    private Cliente buscarCliente(String dniBuscado){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Cliente cliente = session.find(Cliente.class,dniBuscado);
+        if(cliente==null){
+            String nombreDelNuevoCliente = JOptionPane.showInputDialog(null, "Ingrese el nombre del cliente");
+            String direccionDelNuevoCliente = JOptionPane.showInputDialog(null, "Ingrese la direccion del cliente");
+            String emailDelNuevoCliente = JOptionPane.showInputDialog(null, "Ingrese el email del cliente");
+            Cliente nuevoCliente = new Cliente(dniBuscado, nombreDelNuevoCliente, direccionDelNuevoCliente, emailDelNuevoCliente);
+        //    session.beginTransaction();
+            session.save(nuevoCliente);
+            //session.getTransaction().commit();
+            return nuevoCliente;             
+        } else{ 
+            //String nombreDeCliente = cliente.getNombre();
+            //String direccionDeCliente = cliente.getDireccion();
+            //String mail = cliente.getMail();
+            //Cliente clienteRecuperado = new Cliente(dniBuscado, nombreDeCliente, direccionDeCliente, mail);
+            //System.out.println(clienteRecuperado.getDni());
+            //System.out.println(clienteRecuperado.getNombre());
+            //System.out.println(clienteRecuperado.getDireccion());
+            //System.out.println(clienteRecuperado.getMail());
+            return cliente;
+        }
+    }
+    
+    private Categoria buscarCategoria(Integer idCategoria){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        //session.beginTransaction();
+        Categoria categoria = session.find(Categoria.class,idCategoria);
+        return categoria;
+    }
+    
+        private Tecnico buscarTecnico(Integer idTecnico){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        //session.beginTransaction();
+        Tecnico tecnico = session.find(Tecnico.class,idTecnico);
+        return tecnico;
+    }
+    
+
+    private void ingresarOrden(){
+    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+    //session.beginTransaction();
+    String descripcionDeLaOrden = JOptionPane.showInputDialog(null, "Ingrese la Descripcion de la orden");
+    Integer costoDeLaOrden = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el costo de la orden"));
+    
+    String dniDelCliente = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente");
+    Cliente clienteDeOrdenNueva = this.buscarCliente(dniDelCliente);
+
+    Integer idCategoria = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el id de la categoria"));
+    Categoria categoriaIngresada = this.buscarCategoria(idCategoria);
+    
+    Integer idTecnico =  Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el id del tecnico"));
+    Tecnico tecnicoIngresado = this.buscarTecnico(idTecnico);
+
+    
+    Orden nuevaOrden = new Orden(descripcionDeLaOrden, costoDeLaOrden, clienteDeOrdenNueva, categoriaIngresada, tecnicoIngresado);
+    //session.beginTransaction();
+    session.save(nuevaOrden);
+    session.getTransaction().commit();
+}
+        
+    private void listarOrdenesEntre(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        
+        List<Orden> todasLasOrdenes = (List<Orden>)session.createQuery("from Orden").list();
+        Integer añoPrimeraFecha = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el año de la primera fecha"));
+        Integer mesPrimeraFecha = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el mes de la primera fecha"));
+        Integer diaPrimeraFecha = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el día de la primera fecha"));
+        LocalDate primeraFecha = LocalDate.of(añoPrimeraFecha, mesPrimeraFecha, diaPrimeraFecha);
+        Integer añoSegundaFecha = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el año de la segunda fecha"));
+        Integer mesSegundaFecha = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el mes de la segunda fecha"));
+        Integer diaSegundaFecha = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el día de la segunda fecha"));
+        LocalDate SegundaFecha = LocalDate.of(añoSegundaFecha, mesSegundaFecha, diaSegundaFecha);
+               
+        List<Orden> ordenesFiltradas = this.ordenesEntre(todasLasOrdenes, primeraFecha, SegundaFecha);
+        for(Orden unaOrden: ordenesFiltradas){
+        System.out.println("Cliente :" + unaOrden.getCliente().getNombre() + "\n" + "Tecnico: " + unaOrden.getTecnico().getNombreApellido() + "\n" +
+                "Fecha: " + unaOrden.getFechaOrden() + "\n" + "Descripción: " + unaOrden.getDescripcion());    
+        } 
+        //return this.ordenesEntre(todasLasOrdenes, fecha1, fecha2);
+    }
+    
+        public List<Orden> ordenesEntre(List<Orden> todasLasOrdenes, LocalDate primeraFecha, LocalDate segundaFecha){
+            
+        return (List<Orden>) todasLasOrdenes.stream().filter(orden->orden.getFechaOrden().isAfter(primeraFecha)).
+        filter(orden->orden.getFechaOrden().isBefore(segundaFecha)).collect(Collectors.toList());        
+    }    
     /*
     private void createAndStoreCliente(String dni, String nombre, String direccion, String email){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -110,88 +199,5 @@ public class Grupo4 {
         }
     }
     */ 
-    
-    private Cliente buscarCliente(String dniBuscado){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Cliente cliente = session.find(Cliente.class,dniBuscado);
-        if(cliente==null){
-            String nombreDelNuevoCliente = JOptionPane.showInputDialog(null, "Ingrese el nombre del cliente");
-            String direccionDelNuevoCliente = JOptionPane.showInputDialog(null, "Ingrese la direccion del cliente");
-            String emailDelNuevoCliente = JOptionPane.showInputDialog(null, "Ingrese el email del cliente");
-            Cliente nuevoCliente = new Cliente(dniBuscado, nombreDelNuevoCliente, direccionDelNuevoCliente, emailDelNuevoCliente);
-        //    session.beginTransaction();
-            session.save(nuevoCliente);
-            //session.getTransaction().commit();
-            return nuevoCliente;             
-        } else{ 
-            //String nombreDeCliente = cliente.getNombre();
-            //String direccionDeCliente = cliente.getDireccion();
-            //String mail = cliente.getMail();
-            //Cliente clienteRecuperado = new Cliente(dniBuscado, nombreDeCliente, direccionDeCliente, mail);
-            //System.out.println(clienteRecuperado.getDni());
-            //System.out.println(clienteRecuperado.getNombre());
-            //System.out.println(clienteRecuperado.getDireccion());
-            //System.out.println(clienteRecuperado.getMail());
-            return cliente;
-        }
-    }
-    
-    private Categoria buscarCategoria(Integer idCategoria){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        //session.beginTransaction();
-        Categoria categoria = session.find(Categoria.class,idCategoria);
-        return categoria;
-    }
-    
-        private Tecnico buscarTecnico(Integer idTecnico){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        //session.beginTransaction();
-        Tecnico tecnico = session.find(Tecnico.class,idTecnico);
-        return tecnico;
-    }
-    
 
-    private void ingresarOrden(){
-    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-    //session.beginTransaction();
-    String descripcionDeLaOrden = JOptionPane.showInputDialog(null, "Ingrese la Descripcion de la orden");
-    Integer costoDeLaOrden = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el costo de la orden"));
-    
-    String dniDelCliente = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente");
-    Cliente clienteDeOrdenNueva = this.buscarCliente(dniDelCliente);
-
-    Integer idCategoria = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el id de la categoria"));
-    Categoria categoriaIngresada = this.buscarCategoria(idCategoria);
-    
-    Integer idTecnico =  Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el id del tecnico"));
-    Tecnico tecnicoIngresado = this.buscarTecnico(idTecnico);
-
-    
-    Orden nuevaOrden = new Orden(descripcionDeLaOrden, costoDeLaOrden, clienteDeOrdenNueva, categoriaIngresada, tecnicoIngresado);
-    //session.beginTransaction();
-    session.save(nuevaOrden);
-    session.getTransaction().commit();
-}
-        
-    private void listarOrdenesEntre(LocalDate fecha1, LocalDate fecha2){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        List<Orden> todasLasOrdenes = (List<Orden>)session.createQuery("from Orden").list();
-        List<Orden> ordenesFiltradas = this.ordenesEntre(todasLasOrdenes, fecha1, fecha2);
-        for(Orden unaOrden: ordenesFiltradas){
-        System.out.println(unaOrden.getDescripcion());    
-        } 
-        //return this.ordenesEntre(todasLasOrdenes, fecha1, fecha2);
-    }
-    
-        public List<Orden> ordenesEntre(List<Orden> todasLasOrdenes, LocalDate primeraFecha, LocalDate segundaFecha){
-            
-        return (List<Orden>) todasLasOrdenes.stream().filter(orden->orden.getFechaOrden().isAfter(primeraFecha)).
-        filter(orden->orden.getFechaOrden().isBefore(segundaFecha)).collect(Collectors.toList());        
-    }
-    
-    
-    
-    
 }
